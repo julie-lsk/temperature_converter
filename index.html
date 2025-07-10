@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="/assets/images/icone.ico">
+        <title>Temperature Converter</title>
+
+        <!-- Google font -->
+         <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <!-- React and ReactDOM -->
+        <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <!-- Babel -->
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <!-- Style -->
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                font-family: "Roboto", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 500;
+                font-style: normal;
+            }
+
+            main {
+                background-color: #DFF3E3;
+                height: 100vh;
+                display: flex;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            form {
+                margin: auto;
+                width: 40%;
+                height: 60%;
+                text-align: center;
+                background-color: #BEE5BF;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0px 10px 43px -3px rgba(0,0,0,0.1);
+                display: flex;
+                flex-direction: column;
+                gap: 45px;
+
+                button, input, select {
+                    border: none;
+                    padding: 10px 20px;
+                    font-size: 1rem;
+                    border-radius: 10px;
+                    box-shadow: 0px 10px 43px -3px rgba(0,0,0,0.1);
+                    cursor: pointer;
+                    background: white;
+                    width: -webkit-fill-available;
+                }
+
+                span {
+                    color: #DA4167;
+                    font-size: 1.5rem;
+                }
+
+                .temperatureTextField, .temperatureChooseField {
+                    text-align: left;
+                }
+
+                .temperatureTextField {
+                    text-align: left;
+
+                    input {
+                        margin-top: 10px;
+                    }
+                }
+
+                .temperatureChooseField {
+                    display: flex;
+                    gap: 20px;
+                    width: 100%;
+                    justify-content: space-between;
+
+                    select {
+                        width: 100%;
+                        margin-top: 10px;
+                    }
+                }
+            }
+        </style>
+
+    </head>
+
+
+    <body>
+        <div id="root"></div>
+    </body>
+
+
+    <script type="text/babel">
+        // const { useState, useEffect } = React;
+
+        // ********** Composants **********
+        function NumberField(props) {
+            // console.log(`props.label ${props.label}`);  
+            return (
+                <section className="temperatureTextField">
+                    <label htmlFor="number">{props.label}</label>
+                    <input type="number" name="number" id="number" value={props.value}></input>
+                </section>
+            )   
+        }
+
+        // Objet
+        let temperaturesName = ["Celsius", "Fahrenheit"]
+
+        function ConverterField(props) {
+            return (
+                <section className="temperatureChooseField">
+                    <div className="from">
+                        <label htmlFor="temperatures-select-from">{props.labelFrom}</label>
+                        <select name="temperatures" id="temperatures-select-from">
+                            <option value="">--Please choose an option--</option>
+                            {temperaturesName.map((item, index) => <option key={index} value={item}>{item}</option>)}
+                        </select>
+                    </div>
+                    <div className="to">
+                        <label htmlFor="temperatures-select-to">{props.labelTo}</label>
+                        <select name="temperatures" id="temperatures-select-to">
+                            <option value="">--Please choose an option--</option>
+                            {temperaturesName.map((item, index) => <option key={index} value={item}>{item}</option>)}
+                        </select>
+                    </div>
+                </section>
+            )
+        }
+
+        function ButtonField(props) {
+            return (
+                <button type="button">{props.label}</button>
+            )
+        }
+
+        function ResultField(props) {
+            return (
+                <span>Result : {props.value}</span> 
+            )
+        }
+
+
+        function App() {
+            // const [counter, setCounter] = useState(0);
+            // useEffect( () => {setCounter(1)},[]);
+
+            return (
+                <main>
+                    <form action="">
+                        <h1>Temperature Converter</h1>
+                        <React.Fragment>
+                            <NumberField label="Temperature" value="0" />
+                            <ConverterField value="" labelFrom="From" labelTo="To" />
+                            <ButtonField label="Convert" />
+                            <ResultField value="0" />
+                        </React.Fragment> 
+                    </form>
+                </main>
+            )    
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+</html>
