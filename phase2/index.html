@@ -172,27 +172,29 @@
             const [selectToValue, setSelectToValue] = React.useState(0);
             const [result, setResult] = useState(0);
 
-            // Détecte les modifications de l'input Number
+            // Détecte les modifications des inputs
             const handleInputOnChange = (event) => {
-                console.log(event.target.value);
+                console.log("Value entered : ", event.target.value);
                 setInputValue(event.target.value);
             };
 
             const handleSelectFromOnChange = (event) => {
-                console.log(event.target.value);
+                console.log("From : ", event.target.value);
                 setSelectFromValue(event.target.value);
             };
 
             const handleSelectToOnChange = (event) => {
-                console.log(event.target.value);
+                console.log("To : ",  event.target.value);
                 setSelectToValue(event.target.value);
             };
 
-            function increase() {
-                console.log("test")
-                console.log(inputValue, selectFromValue, selectToValue);
+            // Calcul du résultat de la conversion
+            function calculateResult() {
+                console.log("Final entered value : ", inputValue, "\nFrom : ", selectFromValue, "\nTo : ", selectToValue);
+
                 let resultCelsiusToFahrenheit = inputValue * 1.8 + 32;
                 let resultFahrenheitToCelsius = (inputValue - 32) / 1.8;
+
                 setResult(function (test) {
                     if (selectFromValue == "Celsius") {
                         return resultCelsiusToFahrenheit + "°C";
@@ -209,7 +211,7 @@
                         <React.Fragment>
                             <NumberField value={inputValue} handleInput={handleInputOnChange} />
                             <ConverterField valueFrom={selectFromValue} valueTo={selectToValue} handleInputFrom={handleSelectFromOnChange} handleInputTo={handleSelectToOnChange} labelFrom="From" labelTo="To" />
-                            <button type="button" onClick={increase}>Convert</button>
+                            <button type="button" onClick={calculateResult}>Convert</button>
                             <ResultField value={result} />
                         </React.Fragment> 
                     </form>
