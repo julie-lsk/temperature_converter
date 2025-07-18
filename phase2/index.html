@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="/assets/images/icone.ico">
+        <link rel="icon" href="./assets/images/icone.ico">
         <title>Temperature Converter</title>
 
         <!-- Google font -->
@@ -35,15 +35,19 @@
 
             h1 {
                 font-size: 2.5rem;
+
+                @media (max-width: 768px) {
+                    font-size: 2rem;
+                }
             }
 
             form {
                 margin: auto;
                 width: 40%;
-                height: 60%;
+                height: auto;
                 text-align: center;
                 background-color: #BEE5BF;
-                padding: 30px;
+                padding: 50px 40px 70px;
                 border-radius: 10px;
                 box-shadow: 0px 10px 43px -3px rgba(0,0,0,0.1);
                 display: flex;
@@ -93,6 +97,19 @@
                         margin-top: 10px;
                     }
                 }
+
+            }
+            
+            @media (max-width: 1248px) {
+                form {
+                    width: 60%;
+                }
+            }
+
+            @media (max-width: 768px) {
+                form {
+                    width: 75%;
+                }
             }
         </style>
 
@@ -105,6 +122,7 @@
 
 
     <script type="text/babel">
+        const { useState } = React;
 
         // ********** Composants **********
         
@@ -112,7 +130,7 @@
             return (
                 <section className="temperatureTextField">
                     <label htmlFor="number">Temperature</label>
-                    <input type="number" name="number" id="number" value={props.value}></input>
+                    <input type="number" name="number" id="number" value={props.value} onChange={props.handleInput}></input>
                 </section>
             )   
         }
@@ -125,15 +143,15 @@
                 <section className="temperatureChooseField">
                     <div className="from">
                         <label htmlFor="temperatures-select-from">{props.labelFrom}</label>
-                        <select name="temperatures" id="temperatures-select-from">
-                            <option value="">-- Please choose an option --</option>
+                        <select name="temperatures" id="temperatures-select-from" onChange={props.handleInputFrom}>
+                            <option value="">-- Choose an option --</option>
                             {temperaturesName.map((item, index) => <option key={index} value={item}>{item}</option>)}
                         </select>
                     </div>
                     <div className="to">
                         <label htmlFor="temperatures-select-to">{props.labelTo}</label>
-                        <select name="temperatures" id="temperatures-select-to">
-                            <option value="">-- Please choose an option --</option>
+                        <select name="temperatures" id="temperatures-select-to" onChange={props.handleInputTo}>
+                            <option value="">-- Choose an option --</option>
                             {temperaturesName.map((item, index) => <option key={index} value={item}>{item}</option>)}
                         </select>
                     </div>
@@ -149,15 +167,50 @@
 
 
         function App() {
+            const [inputValue, setInputValue] = React.useState(0);
+            const [selectFromValue, setSelectFromValue] = React.useState(0);
+            const [selectToValue, setSelectToValue] = React.useState(0);
+            const [result, setResult] = useState(0);
+
+            // Détecte les modifications de l'input Number
+            const handleInputOnChange = (event) => {
+                console.log(event.target.value);
+                setInputValue(event.target.value);
+            };
+
+            const handleSelectFromOnChange = (event) => {
+                console.log(event.target.value);
+                setSelectFromValue(event.target.value);
+            };
+
+            const handleSelectToOnChange = (event) => {
+                console.log(event.target.value);
+                setSelectToValue(event.target.value);
+            };
+
+            function increase() {
+                console.log("test")
+                console.log(inputValue, selectFromValue, selectToValue);
+                let resultCelsiusToFahrenheit = inputValue * 1.8 + 32;
+                let resultFahrenheitToCelsius = (inputValue - 32) / 1.8;
+                setResult(function (test) {
+                    if (selectFromValue == "Celsius") {
+                        return resultCelsiusToFahrenheit + "°C";
+                    } else {
+                        return resultFahrenheitToCelsius + "°F";
+                    }
+                });
+            }
+
             return (
                 <main>
                     <form action="">
                         <h1>Temperature Converter</h1>
                         <React.Fragment>
-                            <NumberField value="0" />
-                            <ConverterField value="" labelFrom="From" labelTo="To" />
-                            <button type="button">Convert</button>
-                            <ResultField value="0" />
+                            <NumberField value={inputValue} handleInput={handleInputOnChange} />
+                            <ConverterField valueFrom={selectFromValue} valueTo={selectToValue} handleInputFrom={handleSelectFromOnChange} handleInputTo={handleSelectToOnChange} labelFrom="From" labelTo="To" />
+                            <button type="button" onClick={increase}>Convert</button>
+                            <ResultField value={result} />
                         </React.Fragment> 
                     </form>
                 </main>

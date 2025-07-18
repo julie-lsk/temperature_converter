@@ -40,7 +40,7 @@
             form {
                 margin: auto;
                 width: 40%;
-                height: 60%;
+                height: auto;
                 text-align: center;
                 background-color: #BEE5BF;
                 padding: 30px;
@@ -126,14 +126,14 @@
                     <div className="from">
                         <label htmlFor="temperatures-select-from">{props.labelFrom}</label>
                         <select name="temperatures" id="temperatures-select-from">
-                            <option value="">-- Please choose an option --</option>
+                            <option value="">-- Choose an option --</option>
                             {temperaturesName.map((item, index) => <option key={index} value={item}>{item}</option>)}
                         </select>
                     </div>
                     <div className="to">
                         <label htmlFor="temperatures-select-to">{props.labelTo}</label>
                         <select name="temperatures" id="temperatures-select-to">
-                            <option value="">-- Please choose an option --</option>
+                            <option value="">-- Choose an option --</option>
                             {temperaturesName.map((item, index) => <option key={index} value={item}>{item}</option>)}
                         </select>
                     </div>
